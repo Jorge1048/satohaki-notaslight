@@ -467,6 +467,37 @@ ${instructionsNote.textContent.trim()}`;
             mainNote.addEventListener('input', actualizarDynamicReadme);
             instructionsNote.addEventListener('input', actualizarDynamicReadme);
         })();
+        const elements = {
+  mainNote: document.getElementById("main-note-content-text"),
+  instructionsNote: document.getElementById("instructions-chatgpt-content-text"),
+};
+
+function updateReadme() {
+  const mainText = elements.mainNote.innerText;
+  const instructionsText = elements.instructionsNote.innerText;
+
+  const content = `
+[Nota Principal]
+${mainText}
+
+[Instrucciones para ChatGPT]
+${instructionsText}
+  `;
+
+  document.getElementById("dynamic-readme-content-text").innerText = content;
+}
+
+// Observadores de cambios para actualizar el README automáticamente
+const observerConfig = { childList: true, subtree: true, characterData: true };
+
+const observerMain = new MutationObserver(updateReadme);
+observerMain.observe(elements.mainNote, observerConfig);
+
+const observerInstructions = new MutationObserver(updateReadme);
+observerInstructions.observe(elements.instructionsNote, observerConfig);
+
+// Llamada inicial
+updateReadme();
     </script>
 </body>
 </html>
