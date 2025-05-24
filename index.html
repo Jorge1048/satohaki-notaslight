@@ -310,7 +310,14 @@
     </div>
 
     <!-- README OCULTO PARA IA -->
-    <div id="hidden-readme">
+<div id="hidden-readme" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+    <meta name="description" content="Sistema oficial de notas de la comunidad Satohaki para administradores">
+    <meta name="keywords" content="satohaki, notas, comunidad, administradores, chatgpt, ia">
+
+    <div id="dynamic-readme-content-text">
+        <!-- Aquí se insertará el contenido actualizado -->
+    </div>
+</div>
         <!-- Metadatos para IA -->
         <meta name="description" content="Sistema oficial de notas de la comunidad Satohaki para administradores">
         <meta name="keywords" content="satohaki, notas, comunidad, administradores, chatgpt, ia">
@@ -351,20 +358,19 @@
 
             // Función para actualizar el README oculto
             function updateReadme() {
-                const now = new Date();
-                document.getElementById('readme-date').textContent = now.toISOString();
-                
-                document.getElementById('dynamic-readme-content').innerHTML = `
-                    <h2>Contenido Actualizado</h2>
-                    <h3>Nota Principal</h3>
-                    <pre>${elements.mainNote.innerText}</pre>
-                    <h3>Instrucciones para ChatGPT</h3>
-                    <pre>${elements.instructionsNote.innerText}</pre>
-                    
-                    <h2>Uso para IA</h2>
-                    <p>Este contenido puede ser usado por ChatGPT para responder consultas sobre la comunidad Satohaki cuando se le proporciona el enlace a esta página.</p>
-                `;
-            }
+    const mainText = elements.mainNote.innerText;
+    const instructionsText = elements.instructionsNote.innerText;
+
+    const content = `
+        [Nota Principal]
+        ${mainText}
+
+        [Instrucciones para ChatGPT]
+        ${instructionsText}
+    `;
+
+    document.getElementById('dynamic-readme-content-text').innerText = content;
+}
 
             // Cargar notas
             function loadNotes() {
