@@ -28,7 +28,7 @@
             background-color: #f8f9fa;
             color: var(--dark);
             line-height: 1.6;
-            padding: 20px 15px !important; 
+            padding: 20px 15px;
             max-width: 100vw;
             overflow-x: hidden;
             margin: 0;
@@ -53,7 +53,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            grid-template-columns: 1fr;
             gap: 30px;
             padding: 0 15px;
             width: 100%;
@@ -61,10 +60,9 @@
         
         @media (min-width: 768px) {
             .container {
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: center;
-                grid-template-columns: 2fr 1fr;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
             }
         }
         
@@ -75,20 +73,15 @@
             padding: 25px;
             position: relative;
             transition: all 0.3s ease;
-            margin: 0 auto;
             width: 100%;
             max-width: 100%;
         }
-            
+        
         @media (min-width: 768px) {
-        .note-container {
-        width: calc(50% - 15px); /* Mitad del espacio en desktop */
-    }
-}
-
+            .note-container {
+                width: calc(50% - 15px);
+            }
         }
-        
-        
         
         .note-container:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
@@ -99,8 +92,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            flex-direction: column;
-            align-items: stretch;
         }
         
         .note-title {
@@ -112,17 +103,15 @@
         .note-actions {
             display: flex;
             gap: 8px;
-            flex-wrap: wrap
+            flex-wrap: wrap;
             justify-content: flex-end;
-            margin-top: 10px;
-            justify-content: space-between;
         }
         
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -170,26 +159,16 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             background-color: #fefefe;
-            font-size: 0.9rem;
+            font-size: 1rem;
             line-height: 1.7;
             white-space: pre-wrap;
             word-break: break-word;
             hyphens: auto;
-            text-align: start;
         }
         
         .note-content[contenteditable="true"] {
             outline: none;
             box-shadow: inset 0 0 0 2px #6C5CE755;
-            font-size: 16px !important;
-        }
-        
-        .note-content::-webkit-scrollbar {
-            width: 5px;
-        }
-        
-        #main-note {
-            min-height: 400px;
         }
         
         #password-modal {
@@ -214,30 +193,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
-        .modal-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
         .password-input {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            font-size: 1rem;
             margin-bottom: 20px;
-        }
-        
-        .password-input:focus {
-            outline: 2px solid var(--primary);
-            border-color: transparent;
-        }
-        
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
         }
         
         footer {
@@ -246,103 +207,26 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
         
-        .footer-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--dark);
+        #hidden-readme {
+            display: none;
+            height: 0;
+            overflow: hidden;
+            white-space: pre;
         }
-        
-        .footer-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+        /* Estilos adicionales para móvil */
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .note-content {
+                font-size: 0.9rem;
+            }
         }
-        
-        .contact-list {
-            list-style: none;
-            margin-top: 15px;
-        }
-        
-        .contact-list li {
-            margin-bottom: 8px;
-        }
-        
-        .author {
-            margin-top: 20px;
-            font-style: italic;
-            color: var(--gray);
-            text-align: right;
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--dark);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1001;
-        }
-        
-        .toast.show {
-            opacity: 1;
-        }
-        
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--error); }
-        .toast.warning { background: var(--warning); color: var(--dark); }
-        
-        .edit-status {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--primary);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .edit-status.show {
-            opacity: 1;
-        }
-        
-        .search-box {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
-        }
-        
-        .highlight {
-            background-color: #ffeeba;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        /* ========== ESTILOS PARA MÓVIL (max 767px) ========== */
-@media (max-width: 767px) {
-    .btn {
-        flex: 1;
-        min-width: 80px;
-        padding: 8px 5px;
-        font-size: 0.75rem;
-    }
-    
-    /* Puedes agregar otros estilos móvil aquí */
-}
     </style>
 </head>
 <body>
@@ -356,13 +240,8 @@
                 <h2 class="note-title">Nota Principal</h2>
                 <div class="note-actions">
                     <button id="copy-main" class="btn btn-copy">📋 Copiar</button>
-                    <button id="export-main" class="btn btn-secondary">📤 Exportar</button>
                     <button id="edit-main" class="btn btn-secondary">✏️ Editar</button>
                 </div>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscar en Nota Principal..." class="search-input" id="search-main">
-                <button class="btn btn-secondary search-btn">🔍 Buscar</button>
             </div>
             <div id="main-note" class="note-content" contenteditable="false"></div>
         </div>
@@ -372,13 +251,8 @@
                 <h2 class="note-title">Instrucciones para ChatGPT</h2>
                 <div class="note-actions">
                     <button id="copy-instructions" class="btn btn-copy">📋 Copiar</button>
-                    <button id="export-instructions" class="btn btn-secondary">📤 Exportar</button>
                     <button id="edit-instructions" class="btn btn-secondary">✏️ Editar</button>
                 </div>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscar en Instrucciones..." class="search-input" id="search-instructions">
-                <button class="btn btn-secondary search-btn">🔍 Buscar</button>
             </div>
             <div id="instructions-note" class="note-content" contenteditable="false"></div>
         </div>
@@ -387,46 +261,27 @@
     <footer>
         <div class="footer-content">
             <h3 class="footer-title">¿Qué es esto?</h3>
-            <p>Sistema avanzado de notas para la comunidad Satohaki. Uso exclusivo para administradores.</p>
-            
-            <div class="note-actions" style="margin-top: 20px;">
-                <button id="show-stats" class="btn btn-secondary">📊 Estadísticas</button>
-                <button id="import-btn" class="btn btn-secondary">📥 Importar</button>
-                <input type="file" id="import-file" accept=".json" style="display: none;">
-            </div>
-            
-            <h3 class="footer-title" style="margin-top: 20px;">Contacto</h3>
-            <ul class="contact-list">
-                <li>+57 324 545 1694</li>
-                <li>+57 301 655 0127</li>
-                <li>+58 412 504 9522</li>
-                <li>+52 55 7274 1840</li>
-                <li>+52 744 438 1922</li>
-                <li>+591 77503448</li>
-                <li>+54 9 11 5119-8496</li>
-            </ul>
-            
-            <div class="author">Desarrollado por Light | v2.0.0</div>
+            <p>Sistema de notas para la comunidad Satohaki. Uso exclusivo para administradores.</p>
+            <div class="author">Desarrollado por Light | v3.0</div>
         </div>
     </footer>
     
     <div id="password-modal">
         <div class="modal-content">
-            <h3 class="modal-title">🔒 Autenticación Requerida</h3>
-            <input type="password" class="password-input" placeholder="Ingrese la contraseña" id="password-input">
+            <h3 class="modal-title">🔒 Ingrese la contraseña</h3>
+            <input type="password" class="password-input" placeholder="Contraseña" id="password-input">
             <div class="modal-actions">
                 <button id="cancel-password" class="btn btn-secondary">Cancelar</button>
                 <button id="confirm-password" class="btn btn-primary">Verificar</button>
             </div>
         </div>
     </div>
-    
-    <div class="toast" id="toast"></div>
-    <div class="edit-status" id="edit-status"></div>
+
+    <!-- README oculto para IA -->
+    <div id="hidden-readme"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Elementos del DOM
             const elements = {
                 mainNote: document.getElementById('main-note'),
                 instructionsNote: document.getElementById('instructions-note'),
@@ -437,228 +292,70 @@
                 passwordModal: document.getElementById('password-modal'),
                 passwordInput: document.getElementById('password-input'),
                 confirmPassword: document.getElementById('confirm-password'),
-                cancelPassword: document.getElementById('cancel-password'),
-                toast: document.getElementById('toast'),
-                editStatus: document.getElementById('edit-status'),
-                exportMain: document.getElementById('export-main'),
-                exportInstructions: document.getElementById('export-instructions'),
-                importBtn: document.getElementById('import-btn'),
-                importFile: document.getElementById('import-file'),
-                showStats: document.getElementById('show-stats'),
-                searchMain: document.getElementById('search-main'),
-                searchInstructions: document.getElementById('search-instructions')
+                cancelPassword: document.getElementById('cancel-password')
             };
 
-            // Variables de estado
-            let saveTimeout;
-            let isEditing = false;
+            // Función para actualizar el README oculto
+            const updateReadme = () => {
+                document.getElementById('hidden-readme').textContent = 
+                    `NOTA PRINCIPAL:\n${elements.mainNote.innerText}\n\n` +
+                    `INSTRUCCIONES:\n${elements.instructionsNote.innerText}`;
+            };
 
-            // Funciones principales
-            function showToast(message, type = 'success') {
-                elements.toast.textContent = message;
-                elements.toast.className = `toast show ${type}`;
-                setTimeout(() => elements.toast.className = 'toast', 3000);
-            }
+            // Cargar y guardar notas
+            const loadNotes = () => {
+                ['mainNote', 'instructionsNote'].forEach(key => {
+                    const content = localStorage.getItem(key);
+                    if (content) {
+                        elements[key === 'mainNote' ? 'mainNote' : 'instructionsNote'].innerHTML = 
+                            content.replace(/\n/g, '<br>');
+                    }
+                });
+                updateReadme();
+            };
 
-            function loadNotes() {
-    const loadContent = (element, key) => {
-        const content = localStorage.getItem(key);
-        if (content) {
-            element.innerHTML = content.replace(/\n/g, '<br>');
-        }
-    };
-    
-    loadContent(elements.mainNote, 'mainNote');
-    loadContent(elements.instructionsNote, 'instructionsNote');
-    
-    // Actualiza el div oculto al cargar
-    updateHiddenContent();
-}
+            const saveNotes = () => {
+                ['mainNote', 'instructionsNote'].forEach(key => {
+                    const content = elements[key === 'mainNote' ? 'mainNote' : 'instructionsNote'].innerText;
+                    localStorage.setItem(key, content);
+                });
+                updateReadme();
+            };
 
-function saveNotes() {
-    // Guardado con historial (versión simplificada)
-    const saveWithHistory = (element, key) => {
-        const history = JSON.parse(localStorage.getItem(`${key}_history`) || [];
-        const content = element.innerText;
-        
-        history.unshift({
-            content,
-            timestamp: new Date().toISOString()
-        });
-        
-        if (history.length > 5) history.pop();
-        
-        localStorage.setItem(key, content);
-        localStorage.setItem(`${key}_history`, JSON.stringify(history));
-    };
+            // Eventos de edición
+            elements.editMain.addEventListener('click', () => {
+                elements.passwordModal.style.display = 'flex';
+                elements.passwordInput.focus();
+            });
 
-    saveWithHistory(elements.mainNote, 'mainNote');
-    saveWithHistory(elements.instructionsNote, 'instructionsNote');
-    localStorage.setItem('lastUpdate', new Date().toISOString());
-    
-    // Actualiza el div oculto
-    updateHiddenContent();
-    
-    // Feedback visual
-    elements.editStatus.textContent = '✅ Cambios guardados (local + histórico + div oculto)';
-    elements.editStatus.classList.add('show');
-    setTimeout(() => elements.editStatus.classList.remove('show'), 2000);
-}
+            elements.editInstructions.addEventListener('click', () => {
+                elements.passwordModal.style.display = 'flex';
+                elements.passwordInput.focus();
+            });
 
-function toggleEditMode(enable) {
-    isEditing = enable;
-    [elements.mainNote, elements.instructionsNote].forEach(note => {
-        note.contentEditable = enable;
-    });
-    elements.editStatus.textContent = enable ? '✏️ Modo edición activado' : '🚫 Modo edición desactivado';
-    elements.editStatus.classList.add('show');
-    if (!enable) saveNotes(); // Guarda automáticamente al salir del modo edición
-}
+            elements.confirmPassword.addEventListener('click', () => {
+                if (elements.passwordInput.value === 'lightsato') {
+                    elements.mainNote.contentEditable = elements.instructionsNote.contentEditable = 'true';
+                    elements.passwordModal.style.display = 'none';
+                    elements.passwordInput.value = '';
+                    
+                    // Actualización en tiempo real
+                    [elements.mainNote, elements.instructionsNote].forEach(note => {
+                        note.addEventListener('input', saveNotes);
+                    });
+                }
+            });
 
-// 🔥 NUEVA FUNCIÓN: Actualiza el div oculto
-function updateHiddenContent() {
-    const hiddenDiv = document.getElementById('hidden-content');
-    if (hiddenDiv) {
-        hiddenDiv.textContent = 
-            `ÚLTIMA ACTUALIZACIÓN: ${new Date().toLocaleString()}\n\n` +
-            `NOTA PRINCIPAL:\n${elements.mainNote.innerText}\n\n` +
-            `INSTRUCCIONES:\n${elements.instructionsNote.innerText}\n\n` +
-            `HISTORIAL DISPONIBLE: ${localStorage.getItem('mainNote_history') ? '✅' : '❌'}`;
-    }
-}
-
-
-            // Event Listeners
+            // Eventos de copiado
             elements.copyMain.addEventListener('click', () => {
                 navigator.clipboard.writeText(elements.mainNote.innerText);
-                showToast('Nota principal copiada', 'success');
             });
 
             elements.copyInstructions.addEventListener('click', () => {
                 navigator.clipboard.writeText(elements.instructionsNote.innerText);
-                showToast('Instrucciones copiadas', 'success');
             });
 
-            elements.editMain.addEventListener('click', () => elements.passwordModal.style.display = 'flex');
-            elements.editInstructions.addEventListener('click', () => elements.passwordModal.style.display = 'flex');
-
-            elements.confirmPassword.addEventListener('click', () => {
-                if (elements.passwordInput.value === 'lightsato') {
-                    toggleEditMode(true);
-                    elements.passwordModal.style.display = 'none';
-                    elements.passwordInput.value = '';
-                    localStorage.setItem('authToken', Date.now().toString());
-                } else {
-                    showToast('Contraseña incorrecta', 'error');
-                    elements.passwordInput.value = '';
-                }
-            });
-
-            elements.cancelPassword.addEventListener('click', () => {
-                elements.passwordModal.style.display = 'none';
-                elements.passwordInput.value = '';
-            });
-
-            elements.passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') elements.confirmPassword.click();
-            });
-
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'mainNote') elements.mainNote.innerHTML = e.newValue.replace(/\n/g, '<br>');
-                if (e.key === 'instructionsNote') elements.instructionsNote.innerHTML = e.newValue.replace(/\n/g, '<br>');
-            });
-
-            // Funcionalidades avanzadas
-            elements.exportMain.addEventListener('click', () => {
-                const data = { content: elements.mainNote.innerText };
-                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `nota-principal-${new Date().toISOString()}.json`;
-                a.click();
-                showToast('Exportación exitosa', 'success');
-            });
-
-            elements.exportInstructions.addEventListener('click', () => {
-                const data = { content: elements.instructionsNote.innerText };
-                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `instrucciones-${new Date().toISOString()}.json`;
-                a.click();
-                showToast('Exportación exitosa', 'success');
-            });
-
-            elements.importBtn.addEventListener('click', () => elements.importFile.click());
-
-            elements.importFile.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader ();
-                reader.onload = (event) => {
-                    try {
-                        const data = JSON.parse(event.target.result);
-                        if (confirm('¿Importar datos? Se perderán los cambios no guardados.')) {
-                            localStorage.setItem('mainNote', data.content);
-                            loadNotes();
-                            showToast('Importación exitosa', 'success');
-                        }
-                    } catch {
-                        showToast('Error en importación', 'error');
-                    }
-                };
-                reader.readAsText(file);
-            });
-
-            elements.showStats.addEventListener('click', () => {
-                const stats = {
-                    mainChars: elements.mainNote.innerText.length,
-                    mainWords: elements.mainNote.innerText.split(/\s+/).length,
-                    instChars: elements.instructionsNote.innerText.length,
-                    instWords: elements.instructionsNote.innerText.split(/\s+/).length,
-                    lastUpdate: new Date(localStorage.getItem('lastUpdate')).toLocaleString()
-                };
-                
-                alert(`📊 Estadísticas detalladas:
-                
-Nota Principal:
-- Caracteres: ${stats.mainChars}
-- Palabras: ${stats.mainWords}
-
-Instrucciones:
-- Caracteres: ${stats.instChars}
-- Palabras: ${stats.instWords}
-
-Última actualización: ${stats.lastUpdate}`);
-            });
-
-            // Búsqueda y autoguardado
-            document.querySelectorAll('.search-btn').forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    const content = index === 0 ? elements.mainNote : elements.instructionsNote;
-                    const searchTerm = index === 0 ? elements.searchMain.value : elements.searchInstructions.value;
-                    content.innerHTML = content.innerText.replace(new RegExp(searchTerm, 'gi'), match => 
-                        `<span class="highlight">${match}</span>`
-                    );
-                });
-            });
-
-            [elements.mainNote, elements.instructionsNote].forEach(note => {
-                note.addEventListener('input', () => {
-                    clearTimeout(saveTimeout);
-                    saveTimeout = setTimeout(saveNotes, 1000);
-                    elements.editStatus.textContent = '⏳ Guardando cambios...';
-                    elements.editStatus.classList.add('show');
-                });
-            });
-
-            // Inicialización
-            if (localStorage.getItem('authToken') && Date.now() - localStorage.getItem('authToken') < 3600000) {
-                toggleEditMode(true);
-            }
+            // Carga inicial
             loadNotes();
         });
     </script>
