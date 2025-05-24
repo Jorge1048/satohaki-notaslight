@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Notas Satohaki Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
     <style>
         :root {
             --primary: #6C5CE7;
@@ -14,13 +14,13 @@
             --gray: #636E72;
             --success: #00B894;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             background-color: #f8f9fa;
@@ -30,14 +30,14 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 30px;
             padding: 20px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         h1 {
             font-size: 2.5rem;
             color: var(--primary);
@@ -45,19 +45,19 @@
             font-weight: 600;
             letter-spacing: -0.5px;
         }
-        
+
         .container {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
         }
-        
+
         @media (min-width: 768px) {
             .container {
                 grid-template-columns: 2fr 1fr;
             }
         }
-        
+
         .note-container {
             background: white;
             border-radius: 12px;
@@ -66,29 +66,29 @@
             position: relative;
             transition: all 0.3s ease;
         }
-        
+
         .note-container:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
-        
+
         .note-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        
+
         .note-title {
             font-size: 1.3rem;
             font-weight: 500;
             color: var(--primary);
         }
-        
+
         .note-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .btn {
             padding: 8px 16px;
             border: none;
@@ -101,36 +101,36 @@
             align-items: center;
             gap: 6px;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
         }
-        
+
         .btn-primary:hover {
             background-color: #5649d1;
             transform: translateY(-1px);
         }
-        
+
         .btn-secondary {
             background-color: var(--light);
             color: var(--dark);
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-secondary:hover {
             background-color: #e1e4eb;
         }
-        
+
         .btn-copy {
             background-color: var(--success);
             color: white;
         }
-        
+
         .btn-copy:hover {
             background-color: #00a884;
         }
-        
+
         .note-content {
             width: 100%;
             max-width: 100%;
@@ -146,12 +146,12 @@
             white-space: pre-wrap;
             word-break: break-word;
         }
-        
+
         .note-content[contenteditable="true"] {
             outline: none;
             box-shadow: inset 0 0 0 2px #6C5CE755;
         }
-        
+
         #password-modal {
             display: none;
             position: fixed;
@@ -164,7 +164,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .modal-content {
             background-color: white;
             padding: 30px;
@@ -173,13 +173,13 @@
             max-width: 400px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        
+
         .modal-title {
             font-size: 1.5rem;
             margin-bottom: 20px;
             color: var(--dark);
         }
-        
+
         .password-input {
             width: 100%;
             padding: 12px 15px;
@@ -188,59 +188,64 @@
             font-size: 1rem;
             margin-bottom: 20px;
         }
-        
+
         .password-input:focus {
             outline: 2px solid var(--primary);
             border-color: transparent;
         }
-        
+
         .modal-actions {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
         }
-        
+
         footer {
             margin-top: 50px;
             padding: 30px 0;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .footer-title {
             font-size: 1.2rem;
             margin-bottom: 15px;
             color: var(--dark);
         }
-        
+
         .footer-content {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
-        
+
         .contact-list {
             list-style: none;
             margin-top: 15px;
         }
-        
+
         .contact-list li {
             margin-bottom: 8px;
         }
-        
+
         .author {
             margin-top: 20px;
             font-style: italic;
             color: var(--gray);
             text-align: right;
         }
-        
+
         /* README oculto para IA */
         #hidden-readme {
             display: none;
             height: 0;
             overflow: hidden;
             white-space: pre;
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
         }
     </style>
 </head>
@@ -248,7 +253,7 @@
     <header>
         <h1>Notas Satohaki</h1>
     </header>
-    
+
     <div class="container">
         <div class="note-container">
             <div class="note-header">
@@ -260,7 +265,7 @@
             </div>
             <div id="main-note" class="note-content" contenteditable="false"></div>
         </div>
-        
+
         <div class="note-container">
             <div class="note-header">
                 <h2 class="note-title">Instrucciones para ChatGPT</h2>
@@ -272,217 +277,196 @@
             <div id="instructions-note" class="note-content" contenteditable="false"></div>
         </div>
     </div>
-    
+
     <footer>
         <div class="footer-content">
             <h3 class="footer-title">¿Qué es esto?</h3>
             <p>Esta es una página web que presenta un sistema de nota para la comunidad Satohaki. Está diseñada exclusivamente para uso de los administradores.</p>
-            
+
             <h3 class="footer-title" style="margin-top: 20px;">¿Deseas más información?</h3>
             <p>Puedes comunicarte por WhatsApp a cualquiera de los siguientes números:</p>
-            
+
             <ul class="contact-list">
                 <li>+57 324 545 1694</li>
                 <li>+57 301 655 0127</li>
                 <li>+58 412 504 9522</li>
                 <li>+52 55 7274 1840</li>
                 <li>+52 744 438 1922</li>
-                <li>+591 77503448</li>
-                <li>+54 9 11 5119-8496</li>
+                <li>+54 9 11 6673 4545</li>
             </ul>
-            
-            <h3 class="footer-title" style="margin-top: 20px;">¿Cuál es la funcionalidad principal?</h3>
-            <p>Mandarle el link de la página a ChatGPT para que te ayude a encontrar información sin necesidad de búsqueda manual.</p>
-            
-            <div class="author">Autor: Light</div>
+            <p class="author">By Satohaki</p>
         </div>
     </footer>
-    
+
+    <!-- Modal para contraseña -->
     <div id="password-modal">
         <div class="modal-content">
-            <h3 class="modal-title">Ingresar contraseña</h3>
-            <input type="password" class="password-input" placeholder="Contraseña" id="password-input">
+            <h3 class="modal-title">Ingrese la contraseña para editar</h3>
+            <input type="password" id="password-input" class="password-input" placeholder="Contraseña" autocomplete="off" />
             <div class="modal-actions">
                 <button id="cancel-password" class="btn btn-secondary">Cancelar</button>
-                <button id="confirm-password" class="btn btn-primary">Confirmar</button>
+                <button id="submit-password" class="btn btn-primary">Aceptar</button>
             </div>
+            <p id="password-error" style="color: red; display: none; margin-top: 10px;">Contraseña incorrecta</p>
         </div>
     </div>
 
-    <!-- README OCULTO PARA IA -->
-<div id="hidden-readme" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
-    <meta name="description" content="Sistema oficial de notas de la comunidad Satohaki para administradores">
-    <meta name="keywords" content="satohaki, notas, comunidad, administradores, chatgpt, ia">
-
-    <div id="dynamic-readme-content-text">
-        <!-- Aquí se insertará el contenido actualizado -->
-    </div>
-</div>
-        <!-- Metadatos para IA -->
-        <meta name="description" content="Sistema oficial de notas de la comunidad Satohaki para administradores">
-        <meta name="keywords" content="satohaki, notas, comunidad, administradores, chatgpt, ia">
-        
-        <!-- Contexto estructurado -->
-        <div itemscope itemtype="http://schema.org/WebApplication">
-            <h1 itemprop="name">Notas Satohaki Pro</h1>
-            <div itemprop="description">
-                <p><strong>Propósito:</strong> Plataforma de gestión de información para administradores de la comunidad Satohaki.</p>
-                <p><strong>Contenido:</strong> 
-                    - Nota Principal: Información general y actualizaciones
-                    - Instrucciones para ChatGPT: Guías para consultas automatizadas
-                </p>
-                <p><strong>Acceso:</strong> Requiere contraseña de administrador (lightsato)</p>
-                <p><strong>Actualización:</strong> <span itemprop="dateModified" id="readme-date"></span></p>
-            </div>
-        </div>
-        
-        <!-- Contenido dinámico -->
-        <div id="dynamic-readme-content"></div>
-    </div>
+    <!-- Contenido oculto para IA (dynamic readme) -->
+    <pre id="dynamic-readme-content-text" style="display:none;"></pre>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos del DOM
-            const elements = {
-                mainNote: document.getElementById('main-note'),
-                instructionsNote: document.getElementById('instructions-note'),
-                copyMain: document.getElementById('copy-main'),
-                copyInstructions: document.getElementById('copy-instructions'),
-                editMain: document.getElementById('edit-main'),
-                editInstructions: document.getElementById('edit-instructions'),
-                passwordModal: document.getElementById('password-modal'),
-                passwordInput: document.getElementById('password-input'),
-                confirmPassword: document.getElementById('confirm-password'),
-                cancelPassword: document.getElementById('cancel-password')
-            };
+        (() => {
+            const PASSWORD = 'notassatohaki'; // Cambia la contraseña aquí si quieres
 
-            // Función para actualizar el README oculto
-            function updateReadme() {
-    const mainText = elements.mainNote.innerText;
-    const instructionsText = elements.instructionsNote.innerText;
+            // Elementos notas
+            const mainNote = document.getElementById('main-note');
+            const instructionsNote = document.getElementById('instructions-note');
 
-    const content = `
-        [Nota Principal]
-        ${mainText}
+            // Botones editar
+            const editMainBtn = document.getElementById('edit-main');
+            const editInstructionsBtn = document.getElementById('edit-instructions');
 
-        [Instrucciones para ChatGPT]
-        ${instructionsText}
-    `;
+            // Botones copiar
+            const copyMainBtn = document.getElementById('copy-main');
+            const copyInstructionsBtn = document.getElementById('copy-instructions');
 
-    document.getElementById('dynamic-readme-content-text').innerText = content;
-}
+            // Modal y elementos contraseña
+            const passwordModal = document.getElementById('password-modal');
+            const passwordInput = document.getElementById('password-input');
+            const submitPasswordBtn = document.getElementById('submit-password');
+            const cancelPasswordBtn = document.getElementById('cancel-password');
+            const passwordError = document.getElementById('password-error');
 
-            // Cargar notas
-            function loadNotes() {
-                const loadContent = (element, key) => {
-                    const content = localStorage.getItem(key);
-                    if (content) {
-                        element.innerHTML = content.replace(/\n/g, '<br>');
-                    }
-                };
-                
-                loadContent(elements.mainNote, 'mainNote');
-                loadContent(elements.instructionsNote, 'instructionsNote');
-                updateReadme();
+            // Área oculta para IA
+            const dynamicReadme = document.getElementById('dynamic-readme-content-text');
+
+            // Estado de edición
+            let currentEdit = null; // 'main' o 'instructions'
+
+            // Cargar datos previos de localStorage
+            mainNote.textContent = localStorage.getItem('notaPrincipal') || 'Aquí puedes escribir la nota principal...';
+            instructionsNote.textContent = localStorage.getItem('notaInstrucciones') || 'Aquí van las instrucciones para ChatGPT...';
+
+            actualizarDynamicReadme();
+
+            // Función para actualizar contenido oculto que verá la IA
+            function actualizarDynamicReadme() {
+                dynamicReadme.textContent =
+`Nota Principal:
+${mainNote.textContent.trim()}
+
+Instrucciones para ChatGPT:
+${instructionsNote.textContent.trim()}`;
             }
 
-            // Guardar notas
-            function saveNotes() {
-                localStorage.setItem('mainNote', elements.mainNote.innerText);
-                localStorage.setItem('instructionsNote', elements.instructionsNote.innerText);
-                updateReadme();
+            // Función para activar edición previa validación de contraseña
+            function pedirContraseña(editar) {
+                currentEdit = editar;
+                passwordInput.value = '';
+                passwordError.style.display = 'none';
+                passwordModal.style.display = 'flex';
+                passwordInput.focus();
             }
 
-            // Función para copiar texto
-            function copyToClipboard(text) {
-                navigator.clipboard.writeText(text);
-            }
-            
-            // Mostrar modal de contraseña
-            function showPasswordModal() {
-                elements.passwordModal.style.display = 'flex';
-                elements.passwordInput.focus();
-            }
-            
-            // Ocultar modal de contraseña
-            function hidePasswordModal() {
-                elements.passwordModal.style.display = 'none';
-                elements.passwordInput.value = '';
-            }
-            
-            // Verificar contraseña
-            function checkPassword() {
-                if (elements.passwordInput.value === 'lightsato') {
-                    elements.mainNote.contentEditable = 'true';
-                    elements.instructionsNote.contentEditable = 'true';
-                    elements.mainNote.focus();
-                    hidePasswordModal();
+            // Cambiar a modo edición
+            function activarEdicion() {
+                let nota = currentEdit === 'main' ? mainNote : instructionsNote;
+                nota.contentEditable = "true";
+                nota.focus();
+
+                // Cambiar botón editar a "Guardar"
+                if (currentEdit === 'main') {
+                    editMainBtn.textContent = 'Guardar';
+                    editMainBtn.classList.remove('btn-secondary');
+                    editMainBtn.classList.add('btn-primary');
                 } else {
-                    alert('Contraseña incorrecta');
-                    elements.passwordInput.value = '';
-                    elements.passwordInput.focus();
+                    editInstructionsBtn.textContent = 'Guardar';
+                    editInstructionsBtn.classList.remove('btn-secondary');
+                    editInstructionsBtn.classList.add('btn-primary');
                 }
             }
-            
-            // Event listeners
-            elements.copyMain.addEventListener('click', () => {
-                copyToClipboard(elements.mainNote.innerText);
-            });
-            
-            elements.copyInstructions.addEventListener('click', () => {
-                copyToClipboard(elements.instructionsNote.innerText);
-            });
-            
-            elements.editMain.addEventListener('click', showPasswordModal);
-            elements.editInstructions.addEventListener('click', showPasswordModal);
-            
-            elements.confirmPassword.addEventListener('click', checkPassword);
-            
-            elements.cancelPassword.addEventListener('click', hidePasswordModal);
-            
-            elements.passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    checkPassword();
+
+            // Desactivar edición y guardar
+            function guardarEdicion() {
+                let nota = currentEdit === 'main' ? mainNote : instructionsNote;
+                nota.contentEditable = "false";
+
+                // Guardar en localStorage
+                if (currentEdit === 'main') {
+                    localStorage.setItem('notaPrincipal', nota.textContent);
+                    editMainBtn.textContent = 'Editar';
+                    editMainBtn.classList.remove('btn-primary');
+                    editMainBtn.classList.add('btn-secondary');
+                } else {
+                    localStorage.setItem('notaInstrucciones', nota.textContent);
+                    editInstructionsBtn.textContent = 'Editar';
+                    editInstructionsBtn.classList.remove('btn-primary');
+                    editInstructionsBtn.classList.add('btn-secondary');
+                }
+
+                actualizarDynamicReadme();
+                currentEdit = null;
+            }
+
+            // Eventos edición
+            editMainBtn.addEventListener('click', () => {
+                if (editMainBtn.textContent === 'Editar') {
+                    pedirContraseña('main');
+                } else {
+                    guardarEdicion();
                 }
             });
-            
-            elements.mainNote.addEventListener('input', saveNotes);
-            elements.instructionsNote.addEventListener('input', saveNotes);
-            
-            // Inicialización
-            loadNotes();
-        });
-        const elements = {
-  mainNote: document.getElementById("main-note-content-text"),
-  instructionsNote: document.getElementById("instructions-chatgpt-content-text"),
-};
 
-function updateReadme() {
-  const mainText = elements.mainNote.innerText;
-  const instructionsText = elements.instructionsNote.innerText;
+            editInstructionsBtn.addEventListener('click', () => {
+                if (editInstructionsBtn.textContent === 'Editar') {
+                    pedirContraseña('instructions');
+                } else {
+                    guardarEdicion();
+                }
+            });
 
-  const content = `
-[Nota Principal]
-${mainText}
+            // Eventos copiar
+            copyMainBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(mainNote.textContent).then(() => {
+                    alert('Nota principal copiada al portapapeles');
+                });
+            });
 
-[Instrucciones para ChatGPT]
-${instructionsText}
-  `;
+            copyInstructionsBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(instructionsNote.textContent).then(() => {
+                    alert('Instrucciones copiadas al portapapeles');
+                });
+            });
 
-  document.getElementById("dynamic-readme-content-text").innerText = content;
-}
+            // Modal contraseña botones
+            submitPasswordBtn.addEventListener('click', () => {
+                if (passwordInput.value === PASSWORD) {
+                    passwordModal.style.display = 'none';
+                    activarEdicion();
+                } else {
+                    passwordError.style.display = 'block';
+                    passwordInput.focus();
+                }
+            });
 
-// Observadores de cambios para actualizar el README automáticamente
-const observerConfig = { childList: true, subtree: true, characterData: true };
+            cancelPasswordBtn.addEventListener('click', () => {
+                passwordModal.style.display = 'none';
+                currentEdit = null;
+            });
 
-const observerMain = new MutationObserver(updateReadme);
-observerMain.observe(elements.mainNote, observerConfig);
+            // Permitir guardar con Enter en input contraseña
+            passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    submitPasswordBtn.click();
+                } else if (e.key === 'Escape') {
+                    cancelPasswordBtn.click();
+                }
+            });
 
-const observerInstructions = new MutationObserver(updateReadme);
-observerInstructions.observe(elements.instructionsNote, observerConfig);
-
-// Llamada inicial
-updateReadme();
+            // Actualizar contenido oculto en tiempo real al escribir
+            mainNote.addEventListener('input', actualizarDynamicReadme);
+            instructionsNote.addEventListener('input', actualizarDynamicReadme);
+        })();
     </script>
 </body>
 </html>
