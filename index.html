@@ -1,241 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Notas Satohaki Pro</title>
-  <style>
-    body {
-      background: #f5f6fa;
-      font-family: Arial, sans-serif;
-      color: #333;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.5;
-    }
-    h1, h2 {
-      color: #6C5CE7;
-      margin-bottom: 12px;
-    }
-    .section {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      padding: 20px;
-    }
-    .note {
-      width: 100%;
-      min-height: 150px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 12px;
-      background: #fafbfc;
-      white-space: pre-wrap;
-      overflow-y: auto;
-      outline: none;
-    }
-    .note[contenteditable="true"] {
-      box-shadow: inset 0 0 4px #6C5CE7aa;
-      background: #fff;
-    }
-    .buttons {
-      margin-top: 10px;
-    }
-    button {
-      background: #6C5CE7;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 8px 14px;
-      margin-right: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: opacity 0.2s;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    button.copy {
-      background: #00B894;
-    }
-    #readme {
-      font-family: monospace;
-      background: #eef1f5;
-      padding: 15px;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      max-height: 400px;
-      overflow-y: auto;
-      border: 1px solid #6C5CE7;
-    }
-    /* Modal */
-    #modal {
-      display: none;
-      position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #modal.active { display: flex; }
-    #modal .box {
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      width: 300px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    #modal input {
-      width: calc(100% - 20px);
-      padding: 8px;
-      margin-bottom: 12px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Principal - Reglas Oficiales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        h1 {
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        h2 {
+            background: linear-gradient(to right, var(--secondary-color), transparent);
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        .section {
+            border-left: 4px solid var(--secondary-color);
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .rules-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .rules-list li:hover {
+            transform: translateX(10px);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .anime-badges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .badge {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .money-box {
+            background: #e8f4fc;
+            border: 2px dashed var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>📜 Notas Principal - Reglas Oficiales</h1>
 
-  <h1>Notas Satohaki Pro</h1>
+        <!-- Índice -->
+        <div class="section">
+            <h2>Índice</h2>
+            <ol class="rules-list">
+                <li><a href="#reglas-dinamicas">Reglas de las Dinámicas</a></li>
+                <li><a href="#distribucion">Distribución de Responsabilidades</a></li>
+                <li><a href="#conteo">Conteo</a></li>
+                <li><a href="#spam">Spam</a></li>
+            </ol>
+        </div>
 
-  <div class="section">
-    <h2>Nota Principal</h2>
-    <div id="note-main" class="note" contenteditable="false" spellcheck="false"></div>
-    <div class="buttons">
-      <button id="btn-edit-main">Editar</button>
-      <button id="btn-copy-main" class="copy">Copiar</button>
+        <!-- Reglas de Dinámicas -->
+        <div class="section" id="reglas-dinamicas">
+            <h2>⚔️ Reglas de las Dinámicas</h2>
+
+            <h3>🧮 Número de Dinas/Express</h3>
+            <div class="code-block">
+                3-4 por día (combinados)
+            </div>
+
+            <h3>⌚ Tiempos</h3>
+            <div class="code-block">
+                Dinámica: 3 horas
+                Express: 45 minutos
+                Intervalo: 3h entre actividades
+            </div>
+
+            <h3>📑 Plantillas</h3>
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Configuración</th>
+                </tr>
+                <tr>
+                    <td>Dinámica</td>
+                    <td>2x10 o 3x7 rondas</td>
+                </tr>
+                <tr>
+                    <td>Express</td>
+                    <td>1x7 rondas</td>
+                </tr>
+            </table>
+
+            <h3>💰 Montos y Pagos</h3>
+            <div class="money-box">
+                <strong>DINÁMICAS:</strong><br>
+                • Matutina/Vespertina: 5,000 + 5,000<br>
+                • Nocturna: 8,000 + 8,000<br>
+                • Millonaria: 1,000,000<br><br>
+                
+                <strong>EXPRESS:</strong><br>
+                • Normal: 3,000 + 3,000<br>
+                • Millonaria: 700,000
+            </div>
+
+            <h3>⛔ Prohibiciones</h3>
+            <div class="warning">
+                ✘ Dar puntos a no participantes<br>
+                ✘ Reutilizar plantillas el mismo día<br>
+                ✘ Modificar distintivos
+            </div>
+        </div>
+
+        <!-- Distribución de Responsabilidades -->
+        <div class="section" id="distribucion">
+            <h2>👥 Distribución de Responsabilidades</h2>
+
+            <h3>🛡️ Deberes de Admins</h3>
+            <ol class="rules-list">
+                <li>Sumar puntos correctamente</li>
+                <li>Reclutar nuevos miembros</li>
+                <li>Realizar dinámicas</li>
+                <li>Mantener orden durante actividades</li>
+            </ol>
+
+            <h3>👑 Deberes de Líderes</h3>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Responsabilidad</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Control administrativo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Capacitar nuevos admins</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Administrar pagos</td>
+                </tr>
+            </table>
+
+            <h3>🎖️ Distintivos Oficiales</h3>
+            <div class="anime-badges">
+                <div class="badge">👒🏴‍☠️ ONE PIECE</div>
+                <div class="badge">🎒🧢 POKÉMON</div>
+                <div class="badge">🦊🍥 NARUTO</div>
+                <div class="badge">🗝️🕊️ SHINGEKI</div>
+                <div class="badge">🗡️🪽 NANATSU</div>
+                <div class="badge">📿👁️ JUJUTSU</div>
+                <div class="badge">👊🏻🕋 TOKYO REVENGERS</div>
+                <div class="badge">⚽💠 BLUE LOCK</div>
+            </div>
+        </div>
+
+        <!-- Conteo -->
+        <div class="section" id="conteo">
+            <h2>🧮 Sistema de Conteo</h2>
+            <div class="code-block">
+                Plataforma oficial:<br>
+                <a href="https://jorge1048.github.io/satohaki-pagelight/" target="_blank">
+                    https://jorge1048.github.io/satohaki-pagelight/
+                </a>
+            </div>
+
+            <h3>📝 Reglas de Conteo</h3>
+            <pre class="code-block">
+🗓️ Fecha: DD/MM
+👥 Participantes:
+   - Jugador1: Puntos
+   - Jugador2: Puntos
+🏵️ Total: Suma total
+➖ Restas individuales
+💣 Restas millonarias
+🪙 Puntos millonarios
+💠 Puntos VIP (x2)
+🏮 Descripción actual
+💰 Total final = (🏵️ - 💣) + 🪙 + 💠 + 🏮</pre>
+        </div>
+
+        <!-- Spam -->
+        <div class="section" id="spam">
+            <h2>📨 Política de Spam</h2>
+            <div class="warning">
+                ❗ Obligatorio: 3 spam/día<br>
+                ❗ 2 días/semana por anime<br>
+                ❗ Sanción: -15,000,000 por incumplimiento
+            </div>
+
+            <h3>✅ Spam Permitido</h3>
+            <ul class="rules-list">
+                <li>Anuncios de dinámicas</li>
+                <li>Recordatorios de conteo</li>
+                <li>Actualizaciones de puntajes</li>
+            </ul>
+        </div>
     </div>
-  </div>
-
-  <div class="section">
-    <h2>Instrucciones para ChatGPT</h2>
-    <div id="note-instr" class="note" contenteditable="false" spellcheck="false"></div>
-    <div class="buttons">
-      <button id="btn-edit-instr">Editar</button>
-      <button id="btn-copy-instr" class="copy">Copiar</button>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>README (Contenido combinado)</h2>
-    <pre id="readme"></pre>
-  </div>
-
-  <!-- Modal de contraseña -->
-  <div id="modal">
-    <div class="box">
-      <p><strong>Contraseña para editar:</strong></p>
-      <input type="password" id="pass-input" placeholder="Ingrese contraseña" />
-      <div>
-        <button id="modal-cancel" class="copy">Cancelar</button>
-        <button id="modal-ok">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-  (function(){
-    const PASS = 'lightsato';
-
-    const noteMain   = document.getElementById('note-main');
-    const noteInstr  = document.getElementById('note-instr');
-    const readme     = document.getElementById('readme');
-    const btnEditM   = document.getElementById('btn-edit-main');
-    const btnEditI   = document.getElementById('btn-edit-instr');
-    const btnCopyM   = document.getElementById('btn-copy-main');
-    const btnCopyI   = document.getElementById('btn-copy-instr');
-    const modal      = document.getElementById('modal');
-    const passInput  = document.getElementById('pass-input');
-    const modalOk    = document.getElementById('modal-ok');
-    const modalCancel= document.getElementById('modal-cancel');
-
-    let currentNote = null;
-
-    function load() {
-      noteMain.innerHTML  = localStorage.getItem('satohaki_main') || '';
-      noteInstr.innerHTML = localStorage.getItem('satohaki_instr') || '';
-      updateReadme();
-    }
-
-    function saveAndUpdate() {
-      localStorage.setItem('satohaki_main',  noteMain.innerHTML);
-      localStorage.setItem('satohaki_instr', noteInstr.innerHTML);
-      updateReadme();
-    }
-
-    function updateReadme() {
-      const a = noteMain.innerText.trim();
-      const b = noteInstr.innerText.trim();
-      readme.textContent = `[Nota Principal]\n${a}\n\n[Instrucciones para ChatGPT]\n${b}`;
-    }
-
-    function showModal(noteDiv) {
-      currentNote = noteDiv;
-      passInput.value = '';
-      modal.classList.add('active');
-      passInput.focus();
-    }
-
-    function hideModal() {
-      modal.classList.remove('active');
-      currentNote = null;
-    }
-
-    modalOk.addEventListener('click', ()=>{
-      if (passInput.value === PASS && currentNote) {
-        currentNote.contentEditable = true;
-        currentNote.focus();
-        if (currentNote === noteMain)  btnEditM.textContent = 'Guardar';
-        else                            btnEditI.textContent = 'Guardar';
-        hideModal();
-      } else {
-        alert('Contraseña incorrecta');
-        passInput.value = '';
-        passInput.focus();
-      }
-    });
-    modalCancel.addEventListener('click', hideModal);
-    passInput.addEventListener('keydown', e=>{
-      if (e.key === 'Enter') modalOk.click();
-    });
-
-    btnEditM.addEventListener('click', ()=>{
-      if (btnEditM.textContent === 'Editar') showModal(noteMain);
-      else {
-        noteMain.contentEditable = false;
-        btnEditM.textContent = 'Editar';
-        saveAndUpdate();
-      }
-    });
-
-    btnEditI.addEventListener('click', ()=>{
-      if (btnEditI.textContent === 'Editar') showModal(noteInstr);
-      else {
-        noteInstr.contentEditable = false;
-        btnEditI.textContent = 'Editar';
-        saveAndUpdate();
-      }
-    });
-
-    btnCopyM.addEventListener('click', ()=>{
-      navigator.clipboard.writeText(noteMain.innerText)
-        .then(_=> alert('Nota Principal copiada'));
-    });
-    btnCopyI.addEventListener('click', ()=>{
-      navigator.clipboard.writeText(noteInstr.innerText)
-        .then(_=> alert('Instrucciones copiadas'));
-    });
-
-    noteMain.addEventListener('input', saveAndUpdate);
-    noteInstr.addEventListener('input', saveAndUpdate);
-
-    load();
-  })();
-  </script>
-
 </body>
 </html>
