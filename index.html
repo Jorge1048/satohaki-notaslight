@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notas Satohaki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notas Satohaki Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,8 @@
             --light: #F5F6FA;
             --gray: #636E72;
             --success: #00B894;
+            --error: #d63031;
+            --warning: #fdcb6e;
         }
         
         * {
@@ -26,12 +28,10 @@
             background-color: #f8f9fa;
             color: var(--dark);
             line-height: 1.6;
-            body {
-            padding-left: 30px !important;
-            padding-right: 30px;
-        }
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 20px 15px !important; 
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
         }
         
         header {
@@ -50,29 +50,45 @@
         }
         
         .container {
-            display: grid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             grid-template-columns: 1fr;
             gap: 30px;
+            padding: 0 15px;
+            width: 100%;
         }
         
         @media (min-width: 768px) {
             .container {
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
                 grid-template-columns: 2fr 1fr;
             }
         }
         
         .note-container {
-            .note-container {
-             margin: 0 auto; 
-             width: calc(100% - 40px); 
-        }
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 25px;
             position: relative;
             transition: all 0.3s ease;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
         }
+            
+        @media (min-width: 768px) {
+        .note-container {
+        width: calc(50% - 15px); /* Mitad del espacio en desktop */
+    }
+}
+
+        }
+        
+        
         
         .note-container:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
@@ -83,6 +99,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-direction: column;
+            align-items: stretch;
         }
         
         .note-title {
@@ -93,14 +111,18 @@
         
         .note-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap
+            justify-content: flex-end;
+            margin-top: 10px;
+            justify-content: space-between;
         }
         
         .btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: none;
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -139,6 +161,8 @@
         }
         
         .note-content {
+            width: 100%;
+            max-width: 100%;
             min-height: 300px;
             max-height: 500px;
             overflow-y: auto;
@@ -146,13 +170,22 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             background-color: #fefefe;
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.7;
             white-space: pre-wrap;
+            word-break: break-word;
+            hyphens: auto;
+            text-align: start;
         }
         
-        .note-content:focus {
-            outline: 2px solid var(--secondary);
+        .note-content[contenteditable="true"] {
+            outline: none;
+            box-shadow: inset 0 0 0 2px #6C5CE755;
+            font-size: 16px !important;
+        }
+        
+        .note-content::-webkit-scrollbar {
+            width: 5px;
         }
         
         #main-note {
@@ -242,25 +275,6 @@
             text-align: right;
         }
         
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-        
         .toast {
             position: fixed;
             bottom: 20px;
@@ -278,11 +292,62 @@
         .toast.show {
             opacity: 1;
         }
+        
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+        .toast.warning { background: var(--warning); color: var(--dark); }
+        
+        .edit-status {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .edit-status.show {
+            opacity: 1;
+        }
+        
+        .search-box {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+        }
+        
+        .highlight {
+            background-color: #ffeeba;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        /* ========== ESTILOS PARA MÓVIL (max 767px) ========== */
+@media (max-width: 767px) {
+    .btn {
+        flex: 1;
+        min-width: 80px;
+        padding: 8px 5px;
+        font-size: 0.75rem;
+    }
+    
+    /* Puedes agregar otros estilos móvil aquí */
+}
     </style>
 </head>
 <body>
     <header>
-        <h1>Notas Satohaki</h1>
+        <h1>Notas Satohaki Pro</h1>
     </header>
     
     <div class="container">
@@ -290,20 +355,14 @@
             <div class="note-header">
                 <h2 class="note-title">Nota Principal</h2>
                 <div class="note-actions">
-                    <button id="copy-main" class="btn btn-copy">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                        </svg>
-                        Copiar
-                    </button>
-                    <button id="edit-main" class="btn btn-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                        </svg>
-                        Editar
-                    </button>
+                    <button id="copy-main" class="btn btn-copy">📋 Copiar</button>
+                    <button id="export-main" class="btn btn-secondary">📤 Exportar</button>
+                    <button id="edit-main" class="btn btn-secondary">✏️ Editar</button>
                 </div>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar en Nota Principal..." class="search-input" id="search-main">
+                <button class="btn btn-secondary search-btn">🔍 Buscar</button>
             </div>
             <div id="main-note" class="note-content" contenteditable="false"></div>
         </div>
@@ -312,20 +371,14 @@
             <div class="note-header">
                 <h2 class="note-title">Instrucciones para ChatGPT</h2>
                 <div class="note-actions">
-                    <button id="copy-instructions" class="btn btn-copy">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                        </svg>
-                        Copiar
-                    </button>
-                    <button id="edit-instructions" class="btn btn-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                        </svg>
-                        Editar
-                    </button>
+                    <button id="copy-instructions" class="btn btn-copy">📋 Copiar</button>
+                    <button id="export-instructions" class="btn btn-secondary">📤 Exportar</button>
+                    <button id="edit-instructions" class="btn btn-secondary">✏️ Editar</button>
                 </div>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar en Instrucciones..." class="search-input" id="search-instructions">
+                <button class="btn btn-secondary search-btn">🔍 Buscar</button>
             </div>
             <div id="instructions-note" class="note-content" contenteditable="false"></div>
         </div>
@@ -334,11 +387,15 @@
     <footer>
         <div class="footer-content">
             <h3 class="footer-title">¿Qué es esto?</h3>
-            <p>Esta es una página web que presenta un sistema de nota para la comunidad Satohaki. Está diseñada exclusivamente para uso de los administradores.</p>
+            <p>Sistema avanzado de notas para la comunidad Satohaki. Uso exclusivo para administradores.</p>
             
-            <h3 class="footer-title" style="margin-top: 20px;">¿Deseas más información?</h3>
-            <p>Puedes comunicarte por WhatsApp a cualquiera de los siguientes números:</p>
+            <div class="note-actions" style="margin-top: 20px;">
+                <button id="show-stats" class="btn btn-secondary">📊 Estadísticas</button>
+                <button id="import-btn" class="btn btn-secondary">📥 Importar</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
             
+            <h3 class="footer-title" style="margin-top: 20px;">Contacto</h3>
             <ul class="contact-list">
                 <li>+57 324 545 1694</li>
                 <li>+57 301 655 0127</li>
@@ -349,121 +406,239 @@
                 <li>+54 9 11 5119-8496</li>
             </ul>
             
-             <h3 class="footer-title" style="margin-top: 20px;">¿Cuál es la funcionalidad principal de esta página?</h3>
-             <p>Mandarle el link de la página a ChatGPT y que este te ayude a encontrar la información que buscas sin necesidad de buscar manualmente en la lista completa.</p>
-                        
-            <div class="author">Autor: Light</div>
+            <div class="author">Desarrollado por Light | v2.0.0</div>
         </div>
     </footer>
     
     <div id="password-modal">
         <div class="modal-content">
-            <h3 class="modal-title">Ingresar contraseña</h3>
-            <input type="password" class="password-input" placeholder="Contraseña" id="password-input">
+            <h3 class="modal-title">🔒 Autenticación Requerida</h3>
+            <input type="password" class="password-input" placeholder="Ingrese la contraseña" id="password-input">
             <div class="modal-actions">
                 <button id="cancel-password" class="btn btn-secondary">Cancelar</button>
-                <button id="confirm-password" class="btn btn-primary">Confirmar</button>
+                <button id="confirm-password" class="btn btn-primary">Verificar</button>
             </div>
         </div>
     </div>
     
-    <div class="toast" id="toast">Texto copiado al portapapeles</div>
-    
+    <div class="toast" id="toast"></div>
+    <div class="edit-status" id="edit-status"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             // Elementos del DOM
-            const mainNote = document.getElementById('main-note');
-            const instructionsNote = document.getElementById('instructions-note');
-            const copyMainBtn = document.getElementById('copy-main');
-            const copyInstructionsBtn = document.getElementById('copy-instructions');
-            const editMainBtn = document.getElementById('edit-main');
-            const editInstructionsBtn = document.getElementById('edit-instructions');
-            const passwordModal = document.getElementById('password-modal');
-            const passwordInput = document.getElementById('password-input');
-            const confirmPasswordBtn = document.getElementById('confirm-password');
-            const cancelPasswordBtn = document.getElementById('cancel-password');
-            const toast = document.getElementById('toast');
-            
-            // Cargar notas desde localStorage
-            if (localStorage.getItem('mainNote')) {
-                mainNote.textContent = localStorage.getItem('mainNote');
+            const elements = {
+                mainNote: document.getElementById('main-note'),
+                instructionsNote: document.getElementById('instructions-note'),
+                copyMain: document.getElementById('copy-main'),
+                copyInstructions: document.getElementById('copy-instructions'),
+                editMain: document.getElementById('edit-main'),
+                editInstructions: document.getElementById('edit-instructions'),
+                passwordModal: document.getElementById('password-modal'),
+                passwordInput: document.getElementById('password-input'),
+                confirmPassword: document.getElementById('confirm-password'),
+                cancelPassword: document.getElementById('cancel-password'),
+                toast: document.getElementById('toast'),
+                editStatus: document.getElementById('edit-status'),
+                exportMain: document.getElementById('export-main'),
+                exportInstructions: document.getElementById('export-instructions'),
+                importBtn: document.getElementById('import-btn'),
+                importFile: document.getElementById('import-file'),
+                showStats: document.getElementById('show-stats'),
+                searchMain: document.getElementById('search-main'),
+                searchInstructions: document.getElementById('search-instructions')
+            };
+
+            // Variables de estado
+            let saveTimeout;
+            let isEditing = false;
+
+            // Funciones principales
+            function showToast(message, type = 'success') {
+                elements.toast.textContent = message;
+                elements.toast.className = `toast show ${type}`;
+                setTimeout(() => elements.toast.className = 'toast', 3000);
             }
-            
-            if (localStorage.getItem('instructionsNote')) {
-                instructionsNote.textContent = localStorage.getItem('instructionsNote');
+
+            function loadNotes() {
+                const loadContent = (element, key) => {
+                    const content = localStorage.getItem(key);
+                    if (content) {
+                        element.innerHTML = content.replace(/\n/g, '<br>');
+                    }
+                };
+                
+                loadContent(elements.mainNote, 'mainNote');
+                loadContent(elements.instructionsNote, 'instructionsNote');
             }
-            
-            // Función para copiar texto
-            function copyToClipboard(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast();
-                });
-            }
-            
-            // Mostrar toast de confirmación
-            function showToast() {
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
-            
-            // Mostrar modal de contraseña
-            function showPasswordModal() {
-                passwordModal.style.display = 'flex';
-                passwordInput.focus();
-            }
-            
-            // Ocultar modal de contraseña
-            function hidePasswordModal() {
-                passwordModal.style.display = 'none';
-                passwordInput.value = '';
-            }
-            
-            // Verificar contraseña
-            function checkPassword() {
-                if (passwordInput.value === 'lightsato') {
-                    mainNote.contentEditable = 'true';
-                    instructionsNote.contentEditable = 'true';
-                    mainNote.focus();
-                    hidePasswordModal();
-                } else {
-                    alert('Contraseña incorrecta');
-                    passwordInput.value = '';
-                    passwordInput.focus();
-                }
-            }
-            
-            // Guardar notas en localStorage cuando cambian
+
             function saveNotes() {
-                localStorage.setItem('mainNote', mainNote.textContent);
-                localStorage.setItem('instructionsNote', instructionsNote.textContent);
+                const saveContent = (element, key) => {
+                    const history = JSON.parse(localStorage.getItem(`${key}_history`) || '[]');
+                    const content = element.innerText;
+                    
+                    history.unshift({
+                        content,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    if (history.length > 5) history.pop();
+                    
+                    localStorage.setItem(key, content);
+                    localStorage.setItem(`${key}_history`, JSON.stringify(history));
+                };
+
+                saveContent(elements.mainNote, 'mainNote');
+                saveContent(elements.instructionsNote, 'instructionsNote');
+                localStorage.setItem('lastUpdate', new Date().toISOString());
+                
+                elements.editStatus.textContent = '✅ Cambios guardados';
+                elements.editStatus.classList.add('show');
+                setTimeout(() => elements.editStatus.classList.remove('show'), 2000);
             }
-            
-            // Event listeners
-            copyMainBtn.addEventListener('click', () => {
-                copyToClipboard(mainNote.textContent);
+
+            function toggleEditMode(enable) {
+                isEditing = enable;
+                [elements.mainNote, elements.instructionsNote].forEach(note => {
+                    note.contentEditable = enable;
+                });
+                elements.editStatus.textContent = enable ? '✏️ Modo edición activado' : '🚫 Modo edición desactivado';
+                elements.editStatus.classList.add('show');
+                if (!enable) saveNotes();
+            }
+
+            // Event Listeners
+            elements.copyMain.addEventListener('click', () => {
+                navigator.clipboard.writeText(elements.mainNote.innerText);
+                showToast('Nota principal copiada', 'success');
             });
-            
-            copyInstructionsBtn.addEventListener('click', () => {
-                copyToClipboard(instructionsNote.textContent);
+
+            elements.copyInstructions.addEventListener('click', () => {
+                navigator.clipboard.writeText(elements.instructionsNote.innerText);
+                showToast('Instrucciones copiadas', 'success');
             });
-            
-            editMainBtn.addEventListener('click', showPasswordModal);
-            editInstructionsBtn.addEventListener('click', showPasswordModal);
-            
-            confirmPasswordBtn.addEventListener('click', checkPassword);
-            
-            cancelPasswordBtn.addEventListener('click', hidePasswordModal);
-            
-            passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    checkPassword();
+
+            elements.editMain.addEventListener('click', () => elements.passwordModal.style.display = 'flex');
+            elements.editInstructions.addEventListener('click', () => elements.passwordModal.style.display = 'flex');
+
+            elements.confirmPassword.addEventListener('click', () => {
+                if (elements.passwordInput.value === 'lightsato') {
+                    toggleEditMode(true);
+                    elements.passwordModal.style.display = 'none';
+                    elements.passwordInput.value = '';
+                    localStorage.setItem('authToken', Date.now().toString());
+                } else {
+                    showToast('Contraseña incorrecta', 'error');
+                    elements.passwordInput.value = '';
                 }
             });
-            
-            mainNote.addEventListener('input', saveNotes);
-            instructionsNote.addEventListener('input', saveNotes);
+
+            elements.cancelPassword.addEventListener('click', () => {
+                elements.passwordModal.style.display = 'none';
+                elements.passwordInput.value = '';
+            });
+
+            elements.passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') elements.confirmPassword.click();
+            });
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'mainNote') elements.mainNote.innerHTML = e.newValue.replace(/\n/g, '<br>');
+                if (e.key === 'instructionsNote') elements.instructionsNote.innerHTML = e.newValue.replace(/\n/g, '<br>');
+            });
+
+            // Funcionalidades avanzadas
+            elements.exportMain.addEventListener('click', () => {
+                const data = { content: elements.mainNote.innerText };
+                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `nota-principal-${new Date().toISOString()}.json`;
+                a.click();
+                showToast('Exportación exitosa', 'success');
+            });
+
+            elements.exportInstructions.addEventListener('click', () => {
+                const data = { content: elements.instructionsNote.innerText };
+                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `instrucciones-${new Date().toISOString()}.json`;
+                a.click();
+                showToast('Exportación exitosa', 'success');
+            });
+
+            elements.importBtn.addEventListener('click', () => elements.importFile.click());
+
+            elements.importFile.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader ();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        if (confirm('¿Importar datos? Se perderán los cambios no guardados.')) {
+                            localStorage.setItem('mainNote', data.content);
+                            loadNotes();
+                            showToast('Importación exitosa', 'success');
+                        }
+                    } catch {
+                        showToast('Error en importación', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+
+            elements.showStats.addEventListener('click', () => {
+                const stats = {
+                    mainChars: elements.mainNote.innerText.length,
+                    mainWords: elements.mainNote.innerText.split(/\s+/).length,
+                    instChars: elements.instructionsNote.innerText.length,
+                    instWords: elements.instructionsNote.innerText.split(/\s+/).length,
+                    lastUpdate: new Date(localStorage.getItem('lastUpdate')).toLocaleString()
+                };
+                
+                alert(`📊 Estadísticas detalladas:
+                
+Nota Principal:
+- Caracteres: ${stats.mainChars}
+- Palabras: ${stats.mainWords}
+
+Instrucciones:
+- Caracteres: ${stats.instChars}
+- Palabras: ${stats.instWords}
+
+Última actualización: ${stats.lastUpdate}`);
+            });
+
+            // Búsqueda y autoguardado
+            document.querySelectorAll('.search-btn').forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    const content = index === 0 ? elements.mainNote : elements.instructionsNote;
+                    const searchTerm = index === 0 ? elements.searchMain.value : elements.searchInstructions.value;
+                    content.innerHTML = content.innerText.replace(new RegExp(searchTerm, 'gi'), match => 
+                        `<span class="highlight">${match}</span>`
+                    );
+                });
+            });
+
+            [elements.mainNote, elements.instructionsNote].forEach(note => {
+                note.addEventListener('input', () => {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(saveNotes, 1000);
+                    elements.editStatus.textContent = '⏳ Guardando cambios...';
+                    elements.editStatus.classList.add('show');
+                });
+            });
+
+            // Inicialización
+            if (localStorage.getItem('authToken') && Date.now() - localStorage.getItem('authToken') < 3600000) {
+                toggleEditMode(true);
+            }
+            loadNotes();
         });
     </script>
 </body>
