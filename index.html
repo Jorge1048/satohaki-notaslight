@@ -461,51 +461,72 @@
             }
 
             function loadNotes() {
-                const loadContent = (element, key) => {
-                    const content = localStorage.getItem(key);
-                    if (content) {
-                        element.innerHTML = content.replace(/\n/g, '<br>');
-                    }
-                };
-                
-                loadContent(elements.mainNote, 'mainNote');
-                loadContent(elements.instructionsNote, 'instructionsNote');
-            }
+    const loadContent = (element, key) => {
+        const content = localStorage.getItem(key);
+        if (content) {
+            element.innerHTML = content.replace(/\n/g, '<br>');
+        }
+    };
+    
+    loadContent(elements.mainNote, 'mainNote');
+    loadContent(elements.instructionsNote, 'instructionsNote');
+    
+    // Actualiza el div oculto al cargar
+    updateHiddenContent();
+}
 
-            function saveNotes() {
-                const saveContent = (element, key) => {
-                    const history = JSON.parse(localStorage.getItem(`${key}_history`) || '[]');
-                    const content = element.innerText;
-                    
-                    history.unshift({
-                        content,
-                        timestamp: new Date().toISOString()
-                    });
-                    
-                    if (history.length > 5) history.pop();
-                    
-                    localStorage.setItem(key, content);
-                    localStorage.setItem(`${key}_history`, JSON.stringify(history));
-                };
+function saveNotes() {
+    // Guardado con historial (versión simplificada)
+    const saveWithHistory = (element, key) => {
+        const history = JSON.parse(localStorage.getItem(`${key}_history`) || [];
+        const content = element.innerText;
+        
+        history.unshift({
+            content,
+            timestamp: new Date().toISOString()
+        });
+        
+        if (history.length > 5) history.pop();
+        
+        localStorage.setItem(key, content);
+        localStorage.setItem(`${key}_history`, JSON.stringify(history));
+    };
 
-                saveContent(elements.mainNote, 'mainNote');
-                saveContent(elements.instructionsNote, 'instructionsNote');
-                localStorage.setItem('lastUpdate', new Date().toISOString());
-                
-                elements.editStatus.textContent = '✅ Cambios guardados';
-                elements.editStatus.classList.add('show');
-                setTimeout(() => elements.editStatus.classList.remove('show'), 2000);
-            }
+    saveWithHistory(elements.mainNote, 'mainNote');
+    saveWithHistory(elements.instructionsNote, 'instructionsNote');
+    localStorage.setItem('lastUpdate', new Date().toISOString());
+    
+    // Actualiza el div oculto
+    updateHiddenContent();
+    
+    // Feedback visual
+    elements.editStatus.textContent = '✅ Cambios guardados (local + histórico + div oculto)';
+    elements.editStatus.classList.add('show');
+    setTimeout(() => elements.editStatus.classList.remove('show'), 2000);
+}
 
-            function toggleEditMode(enable) {
-                isEditing = enable;
-                [elements.mainNote, elements.instructionsNote].forEach(note => {
-                    note.contentEditable = enable;
-                });
-                elements.editStatus.textContent = enable ? '✏️ Modo edición activado' : '🚫 Modo edición desactivado';
-                elements.editStatus.classList.add('show');
-                if (!enable) saveNotes();
-            }
+function toggleEditMode(enable) {
+    isEditing = enable;
+    [elements.mainNote, elements.instructionsNote].forEach(note => {
+        note.contentEditable = enable;
+    });
+    elements.editStatus.textContent = enable ? '✏️ Modo edición activado' : '🚫 Modo edición desactivado';
+    elements.editStatus.classList.add('show');
+    if (!enable) saveNotes(); // Guarda automáticamente al salir del modo edición
+}
+
+// 🔥 NUEVA FUNCIÓN: Actualiza el div oculto
+function updateHiddenContent() {
+    const hiddenDiv = document.getElementById('hidden-content');
+    if (hiddenDiv) {
+        hiddenDiv.textContent = 
+            `ÚLTIMA ACTUALIZACIÓN: ${new Date().toLocaleString()}\n\n` +
+            `NOTA PRINCIPAL:\n${elements.mainNote.innerText}\n\n` +
+            `INSTRUCCIONES:\n${elements.instructionsNote.innerText}\n\n` +
+            `HISTORIAL DISPONIBLE: ${localStorage.getItem('mainNote_history') ? '✅' : '❌'}`;
+    }
+}
+
 
             // Event Listeners
             elements.copyMain.addEventListener('click', () => {
