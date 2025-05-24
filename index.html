@@ -3,352 +3,261 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Notas Satohaki Pro - Vista Elegante</title>
+<title>Notas Satohaki Pro</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-  body {
-    background: #f0f2f5;
-    font-family: 'Inter', sans-serif;
-    color: #222;
-    margin: 30px auto;
-    max-width: 960px;
-    padding: 0 20px;
-  }
-  h1 {
-    text-align: center;
-    color: #6C5CE7;
-    margin-bottom: 40px;
-  }
-  .notes-wrapper {
-    display: grid;
-    gap: 35px;
-    grid-template-columns: 1fr 1fr;
-  }
-  .note-box {
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 6px 25px rgba(108, 92, 231, 0.15);
-    padding: 25px 30px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-  }
-  .note-header h2 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: #4b4b8b;
-  }
-  .btn {
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    padding: 8px 18px;
-    font-size: 0.9rem;
-    transition: background-color 0.25s ease;
-    user-select: none;
-  }
-  .btn-edit {
-    background-color: #6C5CE7;
-    color: white;
-    margin-left: 8px;
-  }
-  .btn-edit:hover {
-    background-color: #5946d2;
-  }
-  .btn-copy {
-    background-color: #00b894;
-    color: white;
-  }
-  .btn-copy:hover {
-    background-color: #019870;
-  }
-  .note-content {
-    flex-grow: 1;
-    border: 1.7px solid #d6d6d6;
-    border-radius: 12px;
-    padding: 18px 22px;
-    font-size: 1rem;
-    line-height: 1.5;
-    background: #fafafa;
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-y: auto;
-    outline: none;
-    transition: box-shadow 0.3s ease;
-  }
-  .note-content[contenteditable="true"] {
-    border-color: #6C5CE7;
-    background: #fff;
-    box-shadow: 0 0 12px rgba(108, 92, 231, 0.5);
-  }
-  /* Modal overlay */
-  #password-modal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: fadeIn 0.3s ease forwards;
-  }
-  #password-modal.active {
-    display: flex;
-  }
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  .modal-content {
-    background: white;
-    padding: 28px 35px;
-    border-radius: 14px;
-    width: 320px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    text-align: center;
-    font-weight: 600;
-    color: #333;
-  }
-  .modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 18px;
-    font-size: 1.2rem;
-    color: #6C5CE7;
-  }
-  .modal-content input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2px solid #d6d6d6;
-    border-radius: 10px;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: border-color 0.25s ease;
-  }
-  .modal-content input:focus {
-    border-color: #6C5CE7;
-    outline: none;
-  }
-  .modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-  .modal-buttons button {
-    padding: 9px 18px;
-    font-weight: 600;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    user-select: none;
-  }
-  .btn-cancel {
-    background-color: #bbb;
-    color: white;
-  }
-  .btn-cancel:hover {
-    background-color: #999;
-  }
-  .btn-confirm {
-    background-color: #6C5CE7;
-    color: white;
-  }
-  .btn-confirm:hover {
-    background-color: #5946d2;
-  }
-  /* Responsive */
-  @media (max-width: 720px) {
-    .notes-wrapper {
-      grid-template-columns: 1fr;
+    body {
+        font-family: Arial, sans-serif;
+        background: #f8f9fa;
+        margin: 20px auto;
+        max-width: 900px;
+        color: #2d3436;
     }
-  }
+    h1, h2 {
+        color: #6C5CE7;
+    }
+    .note-container, .readme-container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+    .note-content {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        min-height: 150px;
+        font-size: 1rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        outline: none;
+        background-color: #fefefe;
+        user-select: text;
+    }
+    .note-content[contenteditable="true"] {
+        box-shadow: inset 0 0 5px #6C5CE7aa;
+    }
+    button {
+        background-color: #6C5CE7;
+        border: none;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #5649d1;
+    }
+    #password-modal {
+        display: none;
+        position: fixed;
+        top:0; left:0; right:0; bottom:0;
+        background: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    #password-modal.active {
+        display: flex;
+    }
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        max-width: 400px;
+        width: 90%;
+    }
+    .modal-content input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    .modal-actions {
+        text-align: right;
+    }
+    .modal-actions button {
+        background-color: #00B894;
+    }
+    .modal-actions button.cancel {
+        background-color: #636e72;
+        margin-right: 10px;
+    }
+    pre#readme-content {
+        background: #f0f0f0;
+        border-radius: 8px;
+        padding: 15px;
+        white-space: pre-wrap;
+        font-family: monospace;
+        max-height: 300px;
+        overflow-y: auto;
+    }
 </style>
 </head>
 <body>
 
-<h1>Notas Satohaki Pro</h1>
+<header>
+    <h1>Notas Satohaki Pro</h1>
+</header>
 
-<div class="notes-wrapper">
-  <section class="note-box" aria-label="Nota Principal">
-    <div class="note-header">
-      <h2>Nota Principal</h2>
-      <div>
-        <button id="edit-main" class="btn btn-edit" aria-pressed="false" aria-label="Editar nota principal">Editar</button>
-        <button id="copy-main" class="btn btn-copy" aria-label="Copiar nota principal">Copiar</button>
-      </div>
+<section class="note-container">
+    <h2>Nota Principal</h2>
+    <div id="main-note" class="note-content" contenteditable="false" spellcheck="false"></div>
+    <div style="margin-top: 15px;">
+        <button id="edit-main">Editar Nota Principal</button>
+        <button id="copy-main">Copiar Nota Principal</button>
     </div>
-    <div id="main-note" class="note-content" contenteditable="false" spellcheck="false" aria-live="polite" role="textbox" tabindex="0" aria-multiline="true"></div>
-  </section>
+</section>
 
-  <section class="note-box" aria-label="Instrucciones para ChatGPT">
-    <div class="note-header">
-      <h2>Instrucciones para ChatGPT</h2>
-      <div>
-        <button id="edit-instructions" class="btn btn-edit" aria-pressed="false" aria-label="Editar instrucciones para ChatGPT">Editar</button>
-        <button id="copy-instructions" class="btn btn-copy" aria-label="Copiar instrucciones para ChatGPT">Copiar</button>
-      </div>
+<section class="note-container">
+    <h2>Instrucciones para ChatGPT</h2>
+    <div id="instructions-note" class="note-content" contenteditable="false" spellcheck="false"></div>
+    <div style="margin-top: 15px;">
+        <button id="edit-instructions">Editar Instrucciones</button>
+        <button id="copy-instructions">Copiar Instrucciones</button>
     </div>
-    <div id="instructions-note" class="note-content" contenteditable="false" spellcheck="false" aria-live="polite" role="textbox" tabindex="0" aria-multiline="true"></div>
-  </section>
-</div>
+</section>
 
-<!-- Modal contraseña -->
-<div id="password-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div class="modal-content">
-    <h3 id="modal-title">Ingrese contraseña para editar</h3>
-    <input id="password-input" type="password" placeholder="Contraseña" aria-label="Campo de contraseña" />
-    <div class="modal-buttons">
-      <button id="cancel-password" class="btn-cancel">Cancelar</button>
-      <button id="confirm-password" class="btn-confirm">Confirmar</button>
+<section class="readme-container">
+    <h2>README (Contenido combinado)</h2>
+    <pre id="readme-content"></pre>
+</section>
+
+<!-- Modal de contraseña -->
+<div id="password-modal">
+    <div class="modal-content">
+        <h3>Ingresar contraseña para editar</h3>
+        <input type="password" id="password-input" placeholder="Contraseña" />
+        <div class="modal-actions">
+            <button class="cancel" id="cancel-password">Cancelar</button>
+            <button id="confirm-password">Confirmar</button>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  (() => {
-    const PASS = 'lightsato';
+(() => {
+    const PASSWORD = 'lightsato';
 
-    // Elementos
     const mainNote = document.getElementById('main-note');
     const instructionsNote = document.getElementById('instructions-note');
+    const readmeContent = document.getElementById('readme-content');
+
     const editMainBtn = document.getElementById('edit-main');
     const editInstructionsBtn = document.getElementById('edit-instructions');
     const copyMainBtn = document.getElementById('copy-main');
     const copyInstructionsBtn = document.getElementById('copy-instructions');
+
     const passwordModal = document.getElementById('password-modal');
     const passwordInput = document.getElementById('password-input');
     const confirmPasswordBtn = document.getElementById('confirm-password');
     const cancelPasswordBtn = document.getElementById('cancel-password');
 
-    // Estado
-    let currentEditTarget = null;
+    let editingTarget = null;
 
-    // Carga desde localStorage
-    function loadNotes() {
-      const main = localStorage.getItem('mainNote');
-      const instr = localStorage.getItem('instructionsNote');
-      mainNote.textContent = main || 'Escribe aquí tu nota principal...';
-      instructionsNote.textContent = instr || 'Escribe aquí las instrucciones para ChatGPT...';
+    // Función para actualizar el README visible
+    function updateReadme() {
+        const mainText = mainNote.innerText.trim();
+        const instructionsText = instructionsNote.innerText.trim();
+
+        readmeContent.textContent = `[Nota Principal]\n${mainText}\n\n[Instrucciones para ChatGPT]\n${instructionsText}`;
     }
 
-    // Guarda en localStorage
+    // Guardar notas en localStorage
     function saveNotes() {
-      localStorage.setItem('mainNote', mainNote.textContent);
-      localStorage.setItem('instructionsNote', instructionsNote.textContent);
+        localStorage.setItem('mainNote', mainNote.innerHTML);
+        localStorage.setItem('instructionsNote', instructionsNote.innerHTML);
     }
 
-    // Muestra modal para contraseña y prepara edición
+    // Cargar notas de localStorage
+    function loadNotes() {
+        const mainStored = localStorage.getItem('mainNote');
+        const instructionsStored = localStorage.getItem('instructionsNote');
+
+        if (mainStored) mainNote.innerHTML = mainStored;
+        if (instructionsStored) instructionsNote.innerHTML = instructionsStored;
+
+        updateReadme();
+    }
+
+    // Mostrar modal de contraseña
     function showPasswordModal(target) {
-      currentEditTarget = target;
-      passwordInput.value = '';
-      passwordModal.classList.add('active');
-      passwordInput.focus();
-    }
-
-    // Oculta modal
-    function hidePasswordModal() {
-      passwordModal.classList.remove('active');
-      passwordInput.value = '';
-      currentEditTarget = null;
-    }
-
-    // Confirmar contraseña
-    function confirmPassword() {
-      if (passwordInput.value === PASS) {
-        if (currentEditTarget) {
-          currentEditTarget.contentEditable = 'true';
-          currentEditTarget.focus();
-          updateButtonToSave(currentEditTarget);
-        }
-        hidePasswordModal();
-      } else {
-        alert('Contraseña incorrecta');
+        editingTarget = target;
+        passwordModal.classList.add('active');
         passwordInput.value = '';
         passwordInput.focus();
-      }
     }
 
-    // Cambiar botón a Guardar
-    function updateButtonToSave(target) {
-      if (target === mainNote) {
-        editMainBtn.textContent = 'Guardar';
-        editMainBtn.setAttribute('aria-pressed', 'true');
-      } else if (target === instructionsNote) {
-        editInstructionsBtn.textContent = 'Guardar';
-        editInstructionsBtn.setAttribute('aria-pressed', 'true');
-      }
+    // Ocultar modal de contraseña
+    function hidePasswordModal() {
+        passwordModal.classList.remove('active');
+        passwordInput.value = '';
+        editingTarget = null;
     }
 
-    // Cambiar botón a Editar
-    function updateButtonToEdit(target) {
-      if (target === mainNote) {
-        editMainBtn.textContent = 'Editar';
-        editMainBtn.setAttribute('aria-pressed', 'false');
-      } else if (target === instructionsNote) {
-        editInstructionsBtn.textContent = 'Editar';
-        editInstructionsBtn.setAttribute('aria-pressed', 'false');
-      }
-    }
-
-    // Desactivar edición y guardar contenido
-    function deactivateEditing(target) {
-      target.contentEditable = 'false';
-      saveNotes();
-      updateButtonToEdit(target);
-    }
-
-    // Al hacer click en editar o guardar
-    function toggleEdit(target, button) {
-      if (button.textContent === 'Editar') {
-        showPasswordModal(target);
-      } else {
-        deactivateEditing(target);
-      }
+    // Verificar contraseña y habilitar edición
+    function checkPassword() {
+        if (passwordInput.value === PASSWORD) {
+            if (editingTarget) {
+                editingTarget.contentEditable = 'true';
+                editingTarget.focus();
+            }
+            hidePasswordModal();
+        } else {
+            alert('Contraseña incorrecta');
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
     }
 
     // Copiar texto al portapapeles
     function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Texto copiado al portapapeles');
-      }).catch(() => {
-        alert('No se pudo copiar el texto');
-      });
+        navigator.clipboard.writeText(text)
+            .then(() => alert('Texto copiado al portapapeles'))
+            .catch(() => alert('Error al copiar texto'));
     }
 
-    // Listeners
-    editMainBtn.addEventListener('click', () => toggleEdit(mainNote, editMainBtn));
-    editInstructionsBtn.addEventListener('click', () => toggleEdit(instructionsNote, editInstructionsBtn));
+    // Event listeners
+    editMainBtn.addEventListener('click', () => showPasswordModal(mainNote));
+    editInstructionsBtn.addEventListener('click', () => showPasswordModal(instructionsNote));
 
-    copyMainBtn.addEventListener('click', () => copyText(mainNote.textContent));
-    copyInstructionsBtn.addEventListener('click', () => copyText(instructionsNote.textContent));
-
-    confirmPasswordBtn.addEventListener('click', confirmPassword);
-    cancelPasswordBtn.addEventListener('click', () => {
-      hidePasswordModal();
-    });
+    confirmPasswordBtn.addEventListener('click', checkPassword);
+    cancelPasswordBtn.addEventListener('click', hidePasswordModal);
 
     passwordInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        confirmPassword();
-      }
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
     });
 
-    // Guardar al escribir
-    mainNote.addEventListener('input', saveNotes);
-    instructionsNote.addEventListener('input', saveNotes);
+    copyMainBtn.addEventListener('click', () => {
+        copyText(mainNote.innerText);
+    });
 
-    // Carga inicial
+    copyInstructionsBtn.addEventListener('click', () => {
+        copyText(instructionsNote.innerText);
+    });
+
+    // Guardar automáticamente cuando se modifica el contenido editable
+    mainNote.addEventListener('input', () => {
+        saveNotes();
+        updateReadme();
+    });
+
+    instructionsNote.addEventListener('input', () => {
+        saveNotes();
+        updateReadme();
+    });
+
+    // Inicializar la página
     loadNotes();
-
-  })();
+})();
 </script>
 
 </body>
